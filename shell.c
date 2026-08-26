@@ -1,28 +1,33 @@
-#include <shell.h> // Includes necessary functions for the program to run
+#include "shell.h"
 
-int main(int ac, char **av) {
+char *cell_read_line(void){
+        char *buf;
+        size_t bufsize;
 
-    // We aren't using the 'ac' (argument count) variable in this code.
-    // This line tells the compiler to ignore it so we don't get an "unused variable" warning.
-    (void)ac; 
-    
-    // This variable will hold the "exit status" (success or failure) of the child process.
-    int status; 
-    
-    // fork() creates an exact copy of this program (called a "child" process).
-    // When fork() returns 0, it means we are currently executing inside that new child process.
-    if (fork() == 0) {
-        
-        // execvp replaces this child process with a brand new command/program.
-        // av[1] is the name of the command to run (like "ls" or "echo").
-        // av+1 passes the rest of the arguments to that command.
-        execvp(av[1], av + 1); 
-    }
-    
-    // The original "parent" process skips the 'if' block and comes down here.
-    // wait() makes the parent pause and wait for the child process to completely finish.
-    wait(&status); 
-    
-    // The program finishes and exits successfully!
-    return EXIT_SUCCESS; 
+        buf = NULL; // Let getline handle memory size automatically
+
+        // Read a line of text typed by the user
+        if(getline(&buf, &bufsize, stdin) == -1)
+        {
+                // If the user pressed Ctrl+D (End of File)
+                if(feof(stdin))
+                  p(RED"[EOF]"RST);
+                else
+                  p(RED"Getline failed"RST);
+        }
+
+        return buf; 
+}
+
+int main(int ac, char **av){
+ char *line;
+ 
+ 
+ while(0xcE88) 
+ {
+  // Wait for the user to type something and save it in 'line'
+  line = cell_read_line();
+ }
+
+ return EXIT_SUCCESS;
 }
