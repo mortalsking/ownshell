@@ -1,21 +1,23 @@
-/* 1. These top two lines prevent this file from being loaded twice by accident. */
-#ifndef SHELL_H
+#ifndef SHELL_H // Include guard: Prevents this header file from being loaded more than once
 #define SHELL_H
 
-/* 2. Pulling in standard C toolboxes (libraries) you need to build a shell. */
-#include<stdio.h>  
-#include<stdlib.h> 
-#include<unistd.h> 
+#include<stdio.h>
+#include<stdlib.h>
+#include<unistd.h> // unistd.h: Provides access to standard OS system calls (like getcwd)
 
-/* 3. Setting up color shortcuts using "ANSI escape codes". */
-#define Y     "\033[1:33m"  // Yellow text
-#define G     "\033[1:32m"  // Green text
-#define C     "\033[1:36m"  // Cyan (light blue) text
-#define RED   "\033[1:31m"  // Red text
-#define RST   "\033[0m"     // Reset (turns the color back to normal)
+// ANSI Escape Codes: Special string sequences used to colorize terminal text
+#define Y     "\033[1:33m" 
+#define G     "\033[1:32m"
+#define C     "\033[1:36m"
+#define RED   "\033[1:31m"
+#define RST   "\033[0m"    // RST: "Reset" - returns the terminal text color back to default
 
-/* 4. A lazy shortcut! */
+
+// Variadic macro: A shortcut that replaces 'p' with 'printf' and accepts any number of arguments
 #define p(...) printf(__VA_ARGS__)
 
-/* 5. This closes the "#ifndef" check from the very top of the file. */
+// Function prototype: Declares the function so other .c files know it exists before using it
+void Getcwd(char *, size_t);
+
+
 #endif
