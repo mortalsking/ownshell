@@ -1,33 +1,38 @@
-#include "shell.h"
+#include<shell.h>
 
 char *cell_read_line(void){
-        char *buf;
-        size_t bufsize;
+        char *buf;        // Pointer to hold the text the user types
+        size_t bufsize;   // Tracks the size of the allocated memory
+        char cwd[BUFSIZ]; // Buffer for current directory (unused right now)
+        
+        buf = NULL;       // Set to NULL so getline automatically allocates memory for us
 
-        buf = NULL; // Let getline handle memory size automatically
-
-        // Read a line of text typed by the user
-        if(getline(&buf, &bufsize, stdin) == -1)
+        p("$<");         
+        
+     
+        // If it returns -1, something went wrong or ended.
+        if(getline(&buf, &bufsize, stdin) == -1) 
         {
-                // If the user pressed Ctrl+D (End of File)
-                if(feof(stdin))
-                  p(RED"[EOF]"RST);
+                
+                if(feof(stdin)) 
+                  p(RED"[EOF]"RST);          
                 else
                   p(RED"Getline failed"RST);
         }
-
-        return buf; 
+        
+        return buf;       
 }
 
-int main(int ac, char **av){
- char *line;
- 
- 
- while(0xcE88) 
+int main(int ac,char **av){
+
+ char *line;     
+
+ while(0xcE88)    
  {
-  // Wait for the user to type something and save it in 'line'
-  line = cell_read_line();
+  line = cell_read_line(); 
+  
+  p("%s\n", line);        
  }
 
- return EXIT_SUCCESS;
+ return EXIT_SUCCESS;     
 }
