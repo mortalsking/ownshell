@@ -18,6 +18,7 @@
 
 // Function prototype: Declares the function so other .c files know it exists before using it
 void Getcwd(char *, size_t);
+void printbanner(void);
 
 
 #endif
