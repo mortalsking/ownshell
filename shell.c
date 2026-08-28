@@ -29,9 +29,9 @@
  }
 
 int main(){
-
+//the Printbanner prints the banner during the start of the shell for aesthetic view
+ printbanner();
  char *line;
- 
  // The loop continues automatically as long as the returned line is NOT NULL
  while(line = cell_read_line())
  {
