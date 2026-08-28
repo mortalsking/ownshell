@@ -1,38 +1,43 @@
-#include<shell.h>
+#include "shell.h"
 
-char *cell_read_line(void){
-        char *buf;        // Pointer to hold the text the user types
-        size_t bufsize;   // Tracks the size of the allocated memory
-        char cwd[BUFSIZ]; // Buffer for current directory (unused right now)
-        
-        buf = NULL;       // Set to NULL so getline automatically allocates memory for us
+ char *cell_read_line(void){
+        char *buf;
+        size_t bufsize;
+        char cwd[BUFSIZ]; // BUFSIZ: A standard system value large enough to hold file paths
+        buf = NULL;
 
-        p("$<");         
+        Getcwd(cwd,sizeof(cwd)); // Fetches your current directory path
+        p(C"🤖 %s 🤖"RST"$>",cwd);
         
-     
-        // If it returns -1, something went wrong or ended.
-        if(getline(&buf, &bufsize, stdin) == -1) 
+        // getline: Reads input from the keyboard (stdin) and automatically sizes memory
+        if(getline(&buf,&bufsize,stdin) == -1)
         {
-                
-                if(feof(stdin)) 
-                  p(RED"[EOF]"RST);          
+                // feof: Checks if the input failed because of "End Of File" (Ctrl+D)
+                if(feof(stdin))
+                {
+                        p(RED"[EOF]"RST);
+                        return NULL; // NULL acts as a signal to break the loop in main
+                }
                 else
-                  p(RED"Getline failed"RST);
+                {
+                        p(RED"Getline failed"RST);
+                        return NULL;
+                }
+
         }
-        
-        return buf;       
-}
-
-int main(int ac,char **av){
-
- char *line;     
-
- while(0xcE88)    
- {
-  line = cell_read_line(); 
-  
-  p("%s\n", line);        
+        return buf;
  }
 
- return EXIT_SUCCESS;     
+int main(){
+
+ char *line;
+ 
+ // The loop continues automatically as long as the returned line is NOT NULL
+ while(line = cell_read_line())
+ {
+  p("%s\n",line);
+ }
+
+return EXIT_SUCCESS; // Standard C macro (equal to 0) indicating a clean exit
+
 }
