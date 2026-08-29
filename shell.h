@@ -15,10 +15,15 @@
 
 // Variadic macro: A shortcut that replaces 'p' with 'printf' and accepts any number of arguments
 #define p(...) printf(__VA_ARGS__)
-
+// DEL: A string of all the "whitespace" characters strtok will use to cut the input
+#define DEL "\n\t \v\f\r"
 // Function prototype: Declares the function so other .c files know it exists before using it
 void Getcwd(char *, size_t);
 void printbanner(void);
 
+// FIXED: Added the prototypes you were missing from your previous steps!
+void *Malloc(size_t size);
+char *cell_read_line(void);
+char **cell_split_line(char *line);
 
 #endif
