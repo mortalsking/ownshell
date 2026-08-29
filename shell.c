@@ -1,5 +1,24 @@
 #include "shell.h"
 
+char **cell_split_line(char *line)
+{
+        char **tokens;
+        int position = 0;
+
+        // Allocating memory using your custom wrapper
+        tokens = Malloc(BUFSIZ * sizeof *tokens);
+
+        // Split the line into separate words
+        for(char *token = strtok(line, DEL); token; token = strtok(NULL, DEL))
+        {
+                tokens[position++] = token;
+        }
+        
+        // The array MUST end with a NULL pointer so the OS knows when to stop reading
+        tokens[position] = NULL; 
+
+        return tokens; 
+}
  char *cell_read_line(void){
         char *buf;
         size_t bufsize;
