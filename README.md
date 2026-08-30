@@ -1,7 +1,7 @@
 # OwnShell
 A basic command-line shell written in C, featuring custom color macros and user input reading.
 
-🚀 How to Run It
+## How to Run It
 Make sure both shell.h and main.c are in the same folder.
 
 Open your terminal (like in VS Code).
@@ -16,7 +16,7 @@ Bash
 ./my_shell
 (Note: Since it is an infinite loop, press Ctrl + C in your terminal to force it to quit).
 
-📚 Library Knowledge
+## Library Knowledge
 Here is why we included those three specific headers:
 
 <stdio.h> (Standard Input/Output): Handles reading and writing. It gives us printf (used in your p macro), stdin (your keyboard), and the getline() function to read text.
@@ -25,7 +25,7 @@ Here is why we included those three specific headers:
 
 <unistd.h> (Unix Standard): Connects your C code to the Unix/Linux operating system. You aren't using its full power yet, but you will need it later for system calls like fork() and execvp() to actually execute the commands the user types.
 
-🧠 Where to Learn More
+## Where to Learn More
 If you want to understand the exact mechanics of building a shell in C, check these out:
 
 Stephen Brennan's "Write a Shell in C": This is the most famous, easy-to-read blog post for this exact project. Just Google "Stephen Brennan write a shell" and read through it. It explains getline, fork, and exec perfectly.
@@ -48,3 +48,29 @@ C can feel repetitive, but you can mold it to your style. Just like how #define 
 
 Master Your Editor Workflows
 Whether you are configuring VS Code or using a terminal editor like Vim, learn to juggle multiple files smoothly. If using Vim, memorize jumping between files (Ctrl + ^ or :bn), and if you ever get a red .swp warning, remember to delete the hidden crash file (rm .filename.swp)!
+Markdown
+## Deep Dive: Tokenizing and Memory Management
+
+When building a shell, reading the text is only half the battle. You have to break that text down and manage the memory dynamically. Here is how `cell_split_line` works:
+
+### 1. What is a Token?
+If a user types `ls -l /tmp`, the OS doesn't understand that as one giant string. It needs an array of individual words (strings). We use `strtok` (String Tokenizer) to cut the input string every time it sees a space. 
+* Token 0: `ls`
+* Token 1: `-l`
+* Token 2: `/tmp`
+
+### 2. The `char **tokens` Array
+Why two asterisks (`**`)? 
+* A `char *` is a pointer to a string (one word).
+* A `char **` is a pointer to an *array* of strings. We need an array of words to pass to the operating system.
+
+### 3. Why we use `realloc`
+We start by making our `tokens` array large enough to hold `BUFSIZ` words (usually a few thousand bytes). But what if a user pastes a massive command with 10,000 words? 
+If we hardcoded the size (e.g., `char *tokens[100]`), the shell would crash (Segmentation Fault). 
+
+Instead, we use a dynamic doubling strategy:
+1. Track how many tokens we have (`position`).
+2. If `position` hits our limit (`bufsize`), we multiply the limit by 2 (`bufsize *= 2`).
+3. We call `realloc()`. This tells the OS: *"Take my existing array, find a bigger space in memory, copy my old words over, and give me the extra space at the end."*
+
+This guarantees our shell will never crash from an input being "too long".
