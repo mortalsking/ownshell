@@ -25,30 +25,34 @@ Here is why we included those three specific headers:
 
 <unistd.h> (Unix Standard): Connects your C code to the Unix/Linux operating system. You aren't using its full power yet, but you will need it later for system calls like fork() and execvp() to actually execute the commands the user types.
 
-## Where to Learn More
+## 🧠 Where to Learn More
+
 If you want to understand the exact mechanics of building a shell in C, check these out:
 
-Stephen Brennan's "Write a Shell in C": This is the most famous, easy-to-read blog post for this exact project. Just Google "Stephen Brennan write a shell" and read through it. It explains getline, fork, and exec perfectly.
+* **Stephen Brennan's "Write a Shell in C":** This is the most famous, easy-to-read blog post for this exact project. Just Google "Stephen Brennan write a shell" and read through it. It explains `getline`, `fork`, and `exec` perfectly.
+* **Linux Man Pages:** If you ever want to know exactly how a function works, just type `man getline` or `man 3 printf` right into your terminal. It is the official manual.
+* **GeeksforGeeks:** Search for topics like "Dynamic Memory Allocation in C" to better understand how `char *buf` and `size_t` work under the hood.
 
-Linux Man Pages: If you ever want to know exactly how a function works, just type man getline or man 3 printf right into your terminal. It is the official manual.
+---
 
-GeeksforGeeks: Search for topics like "Dynamic Memory Allocation in C" to better understand how char *buf and size_t work under the hood.
-The "Work Smart" Guide: Building C Projects the Easy Way
+## 🛠️ The "Work Smart" Guide: Building C Projects the Easy Way
+
 When you are building a system-level project from scratch, typing out long C commands can get exhausting. Learn these "small things" to massively speed up your workflow:
 
-Create a Custom Compile Shortcut
-Stop typing gcc filename.c -o program every single time. Add a function like this to your ~/.bashrc file:
+### 1. Create a Custom Compile Shortcut
+Stop typing `gcc filename.c -o program` every single time. Add a function like this to your `~/.bashrc` file:
 
-Bash
+```bash
 c() { gcc *.c -o "$1" && echo "✅ Compiled successfully!"; }
-Now, you just type c shell and it compiles all your files instantly.
+```
+Now, you just type `c shell` and it compiles all your files instantly.
 
-Use Macros to Save Keystrokes
-C can feel repetitive, but you can mold it to your style. Just like how #define p(...) printf(__VA_ARGS__) makes printing as fast as Python, you can wrap complex error handling (like your Getcwd wrapper) into small, reusable chunks to keep your main code clean.
+### 2. Use Macros to Save Keystrokes
+C can feel repetitive, but you can mold it to your style. Just like how `#define p(...) printf(__VA_ARGS__)` makes printing as fast as Python, you can wrap complex error handling (like your `Getcwd` wrapper) into small, reusable chunks to keep your main code clean.
 
-Master Your Editor Workflows
-Whether you are configuring VS Code or using a terminal editor like Vim, learn to juggle multiple files smoothly. If using Vim, memorize jumping between files (Ctrl + ^ or :bn), and if you ever get a red .swp warning, remember to delete the hidden crash file (rm .filename.swp)!
-Markdown
+### 3. Master Your Editor Workflows
+Whether you are configuring VS Code or using a terminal editor like Vim, learn to juggle multiple files smoothly. If using Vim, memorize jumping between files (`Ctrl + ^` or `:bn`), and if you ever get a red `.swp` warning, remember to delete the hidden crash file (`rm .filename.swp`)!
+
 ## Deep Dive: Tokenizing and Memory Management
 
 When building a shell, reading the text is only half the battle. You have to break that text down and manage the memory dynamically. Here is how `cell_split_line` works:
