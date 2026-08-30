@@ -1,29 +1,29 @@
 # OwnShell
-A basic command-line shell written in C, featuring custom color macros and user input reading.
+A basic command-line shell written in C, featuring custom color macros, a custom ASCII boot banner, and dynamic user input reading.
 
-## How to Run It
-Make sure both shell.h and main.c are in the same folder.
+## 🚀 How to Run It
 
-Open your terminal (like in VS Code).
+1. Make sure all your `.c` and `.h` files (like `shell.h` and `shell.c`) are in the same folder.
+2. Open your terminal (like in VS Code).
+3. Compile the code using GCC:
+   ```bash
+   gcc *.c -o my_shell
+   ```
+4. Run the program:
+   ```bash
+   ./my_shell
+   ```
+*(Note: Since it is an infinite loop, press `Ctrl + D` or `Ctrl + C` in your terminal to safely exit).*
 
-Compile the code using GCC:
+---
 
-Bash
-gcc main.c -o my_shell
-Run the program:
+## 📚 Library Knowledge
 
-Bash
-./my_shell
-(Note: Since it is an infinite loop, press Ctrl + C in your terminal to force it to quit).
+Here is why we included those specific headers:
 
-## Library Knowledge
-Here is why we included those three specific headers:
-
-<stdio.h> (Standard Input/Output): Handles reading and writing. It gives us printf (used in your p macro), stdin (your keyboard), and the getline() function to read text.
-
-<stdlib.h> (Standard Library): Handles memory. When you set buf = NULL, stdlib steps in to automatically give getline the right amount of memory to store the user's text. It also gives us EXIT_SUCCESS.
-
-<unistd.h> (Unix Standard): Connects your C code to the Unix/Linux operating system. You aren't using its full power yet, but you will need it later for system calls like fork() and execvp() to actually execute the commands the user types.
+* **`<stdio.h>` (Standard Input/Output):** Handles reading and writing. It gives us `printf` (used in your `p` macro), `stdin` (your keyboard), and the `getline()` function to read text.
+* **`<stdlib.h>` (Standard Library):** Handles memory. When you set `buf = NULL`, `stdlib` steps in to automatically give `getline` the right amount of memory to store the user's text. It also gives us `EXIT_SUCCESS`.
+* **`<unistd.h>` (Unix Standard):** Connects your C code to the Unix/Linux operating system. You aren't using its full power yet, but you will need it later for system calls like `fork()` and `execvp()` to actually execute the commands the user types.
 
 ## 🧠 Where to Learn More
 
