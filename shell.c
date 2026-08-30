@@ -2,6 +2,7 @@
 
 char **cell_split_line(char *line)
 {
+        int bufsize = BUFSIZ; // FIXED: You must declare and set the initial size!
         char **tokens;
         int position = 0;
 
