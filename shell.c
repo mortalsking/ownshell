@@ -12,6 +12,15 @@ char **cell_split_line(char *line)
         for(char *token = strtok(line, DEL); token; token = strtok(NULL, DEL))
         {
                 tokens[position++] = token;
+                // If we've reached the current buffer size, double it and reallocate
+                // memory for the tokens array to accommodate more elements.
+                // NOTE: use realloc instead of malloc here, and fix the typo "bufize".
+
+                if(position >= bufsize)
+                {
+                        bufsize *= 2;
+                        tokens = malloc(tokens,bufsize * sizeof(*tokens));
+                }
         }
         
         // The array MUST end with a NULL pointer so the OS knows when to stop reading
